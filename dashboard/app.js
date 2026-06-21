@@ -2,7 +2,8 @@
  * Sentinel Dashboard - Live alert feed and triage visualization
  */
 
-const API_BASE = 'http://localhost:8000';
+// Uses current origin so this works on HF Spaces, Railway, localhost, etc.
+const API_BASE = window.location.origin;
 const POLL_INTERVAL = 2000; // 2 seconds
 const MAX_ALERTS_DISPLAY = 100;
 

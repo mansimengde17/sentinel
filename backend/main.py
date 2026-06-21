@@ -4,9 +4,12 @@ FastAPI backend handling Claude integration and decision persistence
 """
 
 import logging
+import os
 import uuid
 from fastapi import FastAPI, Depends, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 from models import AlertPayload, TriageResponse, TriageDecision
 from database import init_db, get_db, save_triage_record, get_recent_records, get_record_by_alert_id
@@ -22,6 +25,14 @@ app = FastAPI(
     title="Sentinel Alert Triage",
     description="AI-powered operational alert triage with Claude",
     version="1.0.0",
+)
+
+# CORS — allows dashboard to call the API from any origin (HF Spaces, localhost)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
@@ -157,6 +168,17 @@ async def get_stats(db: Session = Depends(get_db)):
         "needs_more_info_count": needs_info,
         "avg_confidence": round(avg_confidence, 3),
     }
+
+
+# Serve the dashboard as static files when running on HF Spaces (or Docker)
+# The static/ directory is created by the HF Dockerfile (copies dashboard/ there)
+_static_dir = os.path.join(os.path.dirname(__file__), "static")
+if os.path.isdir(_static_dir):
+    app.mount("/dashboard", StaticFiles(directory=_static_dir, html=True), name="dashboard")
+
+    @app.get("/")
+    async def serve_dashboard():
+        return FileResponse(os.path.join(_static_dir, "index.html"))
 
 
 if __name__ == "__main__":
