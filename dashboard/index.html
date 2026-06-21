@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel - Alert Triage Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">⚔️ Sentinel</h1>
+                <p class="subtitle">AI-Powered Operational Alert Triage</p>
+            </div>
+            <div class="status-indicator">
+                <div id="connection-status" class="status-dot"></div>
+                <span id="status-text">Connecting...</span>
+            </div>
+        </header>
+
+        <!-- Stats -->
+        <section class="stats-section">
+            <div class="stat-card">
+                <div class="stat-number" id="stat-total">0</div>
+                <div class="stat-label">Total Alerts</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="stat-auto">0</div>
+                <div class="stat-label">Auto-Resolved</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="stat-escalate">0</div>
+                <div class="stat-label">Escalated</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="stat-info">0</div>
+                <div class="stat-label">Needs Info</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="stat-confidence">--</div>
+                <div class="stat-label">Avg Confidence</div>
+            </div>
+        </section>
+
+        <!-- Filters -->
+        <section class="filter-section">
+            <button class="filter-btn active" data-filter="all">All Alerts</button>
+            <button class="filter-btn" data-filter="auto_resolve">Auto-Resolved</button>
+            <button class="filter-btn" data-filter="escalate">Escalated</button>
+            <button class="filter-btn" data-filter="needs_more_info">Needs Info</button>
+        </section>
+
+        <!-- Alert Feed -->
+        <section class="alerts-section">
+            <h2>Live Alert Feed</h2>
+            <div id="alerts-container" class="alerts-container">
+                <div class="empty-state">
+                    <p>No alerts received yet. Fire a simulation to begin.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal for detailed view -->
+        <div id="detail-modal" class="modal">
+            <div class="modal-content">
+                <button class="modal-close">&times;</button>
+                <div id="modal-body">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

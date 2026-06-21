@@ -1,0 +1,32 @@
+{
+  "name": "n8n-nodes-sentinel-triage",
+  "version": "1.0.0",
+  "description": "n8n node for AI-powered operational alert triage",
+  "license": "MIT",
+  "author": "Sentinel",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "n8n": {
+    "nodes": ["dist/nodes/SentinelTriage/SentinelTriage.node.js"],
+    "credentials": ["dist/credentials/SentinelApi.credentials.js"]
+  },
+  "dependencies": {
+    "n8n-core": "^1.0.0",
+    "n8n-workflow": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "n8n",
+    "alert",
+    "triage",
+    "sentinel",
+    "ai",
+    "claude"
+  ]
+}
